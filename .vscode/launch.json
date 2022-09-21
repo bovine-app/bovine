@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "name": "Rails server",
+      "type": "rdbg",
+      "request": "launch",
+      "script": "${workspaceRoot}/bin/rails",
+      "args": ["server"]
+    },
+    {
+      "name": "RSpec - all",
+      "type": "rdbg",
+      "request": "launch",
+      "script": "${workspaceRoot}/bin/rspec",
+      "args": ["-I", "${workspaceRoot}"]
+    },
+    {
+      "name": "RSpec - active spec file only",
+      "type": "rdbg",
+      "request": "launch",
+      "script": "${workspaceRoot}/bin/rspec",
+      "args": ["-I", "${workspaceRoot}", "${file}"]
+    }
+  ]
+}
