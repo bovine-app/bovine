@@ -9,6 +9,10 @@ Metrics/MethodLength:
   Exclude:
     - db/migrate/*.rb
 
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/requests/**/*.rb
+
 Style/Documentation:
   Exclude:
     - app/helpers/application_helper.rb
