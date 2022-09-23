@@ -5,7 +5,12 @@ require:
 AllCops:
   NewCops: enable
 
+Metrics/MethodLength:
+  Exclude:
+    - db/migrate/*.rb
+
 Style/Documentation:
   Exclude:
     - app/helpers/application_helper.rb
     - config/application.rb
+    - db/migrate/*.rb
