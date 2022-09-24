@@ -47,7 +47,7 @@ RSpec.describe AttributeProtector do
   describe '#serializable_hash' do
     subject { model.serializable_hash(options) }
 
-    let(:options) { {} }
+    let(:options) { nil }
 
     context 'with empty options' do
       it { is_expected.not_to include 'a_secret_attr' }

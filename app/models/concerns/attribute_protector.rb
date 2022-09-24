@@ -5,6 +5,7 @@
 # ActiveModel::Serialization.serializable_hash.
 module AttributeProtector
   extend ActiveSupport::Concern
+  include ActiveModel::Serialization
 
   class_methods do
     attr_reader :protected_attributes
@@ -14,7 +15,9 @@ module AttributeProtector
     end
   end
 
-  def serializable_hash(options = {})
+  def serializable_hash(options = nil)
+    options ||= {}
+
     (options[:except] ||= []).push(*self.class.protected_attributes).uniq!
     %i[methods only].each { |opt| reject_protected_attributes(options[opt]) }
 
