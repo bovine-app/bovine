@@ -1,0 +1,65 @@
+---
+name: Rails CI
+on: [push]
+env:
+  RAILS_ENV: test
+  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+  reek:
+    runs-on: ubuntu-latest
+    needs: bundle
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - run: bin/reek
+  rubocop:
+    runs-on: ubuntu-latest
+    needs: bundle
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - run: bin/rubocop
+  rspec:
+    runs-on: ubuntu-latest
+    needs: bundle
+    env:
+      PGHOST: localhost
+      PGUSER: bovine
+      PGPASSWORD: bovine
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_DB: bovine_test
+          POSTGRES_PASSWORD: bovine
+          POSTGRES_USER: bovine
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - uses: actions/cache@v3
+        with:
+          key: ${{ hashFiles('app/assets/**') }}-${{ hashFiles('app/javascript/**') }}
+          path: public/assets
+      - run: bin/rails db:setup
+      - run: bin/rspec
