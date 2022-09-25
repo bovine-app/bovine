@@ -4,6 +4,8 @@
 class User < ApplicationRecord
   include AttributeProtector
 
+  has_many :sessions, dependent: :delete_all
+
   has_secure_token :confirmation_token
   has_secure_password
 

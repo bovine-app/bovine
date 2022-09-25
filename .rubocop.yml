@@ -9,6 +9,10 @@ Metrics/MethodLength:
   Exclude:
     - db/migrate/*.rb
 
+Rails/SkipsModelValidations:
+  Exclude:
+    - spec/factories/**/*.rb
+
 RSpec/MultipleExpectations:
   Exclude:
     - spec/requests/**/*.rb
