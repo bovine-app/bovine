@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Represents an active, revokable user session.
+# Represents an active, revocable user session.
 class Session < ApplicationRecord
   include ScopeInverter
 
