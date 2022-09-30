@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Represents individual users that can authenticate with the application.
+# :reek:MissingSafeMethod { exclude: [authenticate!, find_and_authenticate_by!, login!] }
 class User < ApplicationRecord
   include AttributeProtector
   include ScopeInverter
@@ -14,4 +15,20 @@ class User < ApplicationRecord
   has_secure_password
 
   protect_attributes :confirmation_token, :password, :password_confirmation, :password_digest
+
+  class << self
+    def find_and_authenticate_by!(email:, password:)
+      find_by!(email:).authenticate!(password)
+    rescue ActiveRecord::RecordNotFound
+      raise Bovine::Errors::UserAuthenticationError
+    end
+  end
+
+  def authenticate!(password)
+    authenticate(password) or raise Bovine::Errors::UserAuthenticationError
+  end
+
+  def login!(created_from:)
+    sessions.create!(created_from:).to_jwt
+  end
 end

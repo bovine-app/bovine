@@ -1,0 +1,10 @@
+<%= flash[:error] if flash.key?(:error) %>
+
+<%= form_with model: Session.new do |f| %>
+    <%= fields_for :user, User.new do |u| %>
+        <%= u.email_field :email %>
+        <%= u.password_field :password %>
+    <% end %>
+
+    <%= f.submit 'Log In' %>
+<% end %>

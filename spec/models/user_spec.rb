@@ -25,4 +25,22 @@ RSpec.describe User do
       it { is_expected.to include unconfirmed_user }
     end
   end
+
+  describe '#authenticate!' do
+    subject(:authenticate!) { user.authenticate!(password) }
+
+    let(:user) { create(:confirmed_user) }
+
+    context 'with a correct password' do
+      let(:password) { user.password }
+
+      it { is_expected.to be user }
+    end
+
+    context 'with an incorrect password' do
+      let(:password) { Faker::Internet.password }
+
+      it { expect { authenticate! }.to raise_exception Bovine::Errors::UserAuthenticationError }
+    end
+  end
 end
