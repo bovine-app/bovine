@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_24_192026) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_30_224445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -35,9 +35,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_24_192026) do
     t.datetime "confirmed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "lower((email)::text)", name: "index_users_on_LOWER_email", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, where: "(confirmation_token IS NOT NULL)"
     t.index ["confirmed_at"], name: "index_users_on_confirmed_at", where: "(confirmed_at IS NOT NULL)"
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "sessions", "users"

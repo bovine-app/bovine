@@ -6,6 +6,11 @@ class User < ApplicationRecord
   include AttributeProtector
   include ScopeInverter
 
+  validates :email,
+            format: { with: URI::MailTo::EMAIL_REGEXP },
+            presence: true,
+            uniqueness: { case_sensitive: false }
+
   has_many :sessions, dependent: :delete_all
 
   scope :confirmed,   -> { inverse_of(:unconfirmed) }
@@ -18,7 +23,7 @@ class User < ApplicationRecord
 
   class << self
     def find_and_authenticate_by!(email:, password:)
-      find_by!(email:).authenticate!(password)
+      find_by!('LOWER(email) = ?', email.downcase).authenticate!(password)
     rescue ActiveRecord::RecordNotFound
       raise Bovine::Errors::UserAuthenticationError
     end
