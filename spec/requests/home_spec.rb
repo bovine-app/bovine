@@ -8,6 +8,7 @@ RSpec.describe 'Home' do
   describe 'GET /' do
     before { get '/' }
 
-    it { is_expected.to have_http_status(:success) }
+    it { is_expected.to have_http_status :found }
+    it { is_expected.to redirect_to new_session_url }
   end
 end

@@ -8,7 +8,7 @@ RSpec.describe 'Sessions' do
 
     before { get '/sessions/new' }
 
-    it { is_expected.to have_http_status(:success) }
+    it { is_expected.to have_http_status :success }
   end
 
   describe 'POST /' do
@@ -19,7 +19,7 @@ RSpec.describe 'Sessions' do
     context 'with valid parameters' do
       before { post '/sessions', params: { user: { email: user.email, password: user.password } } }
 
-      it { is_expected.to redirect_to(root_url) }
+      it { is_expected.to redirect_to root_url }
 
       it 'creates a session' do
         expect(User.find_by(email: user.email).sessions.count).to be 1

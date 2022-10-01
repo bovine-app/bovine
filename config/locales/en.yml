@@ -30,6 +30,6 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  sessions:
-    create:
-      user_authentication_error: Incorrect email address or password
+  errors:
+    unauthorized: You must be logged in to view that page
+    user_authentication: Incorrect email address or password

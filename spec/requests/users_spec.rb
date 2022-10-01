@@ -8,7 +8,7 @@ RSpec.describe 'Users' do
   describe 'GET /user/new' do
     before { get '/user/new' }
 
-    it { is_expected.to have_http_status(:success) }
+    it { is_expected.to have_http_status :success }
   end
 
   describe 'POST /user' do
@@ -22,10 +22,10 @@ RSpec.describe 'Users' do
       } }
     end
 
-    it { is_expected.to redirect_to(root_url) }
+    it { is_expected.to redirect_to root_url }
 
     it 'creates the user' do
-      expect(User.where(email: user.email).count).to be(1)
+      expect(User.where(email: user.email).count).to be 1
     end
   end
 end

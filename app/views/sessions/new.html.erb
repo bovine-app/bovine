@@ -1,4 +1,4 @@
-<%= flash[:error] if flash.key?(:error) %>
+<%= t(flash[:error], scope: :errors) if flash.key?(:error) %>
 
 <%= form_with model: Session.new do |f| %>
     <%= fields_for :user, User.new do |u| %>

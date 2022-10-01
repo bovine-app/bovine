@@ -2,6 +2,10 @@
 
 # User authentication and session management controller.
 class SessionsController < ApplicationController
+  include SessionAuthentication
+
+  before_action :current_user, only: %i[index]
+
   def index; end
 
   def new
@@ -13,10 +17,12 @@ class SessionsController < ApplicationController
                     .find_and_authenticate_by!(**session_create_params.to_h.symbolize_keys)
                     .login!(created_from: request.remote_ip)
 
-    redirect_to redirect_target, status: :see_other
+    redirect_to redirect_target
   rescue Bovine::Errors::UserAuthenticationError
+    flash[:error] = :user_authentication
     flash.keep(:redirect)
-    redirect_to action: :new, error: t('.user_authentication_error')
+
+    redirect_to action: :new
   end
 
   def destroy; end
