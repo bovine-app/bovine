@@ -8,6 +8,13 @@
       "args": ["server"]
     },
     {
+      "name": "Rails console",
+      "type": "rdbg",
+      "request": "launch",
+      "script": "${workspaceRoot}/bin/rails",
+      "args": ["console"]
+    },
+    {
       "name": "RSpec - all",
       "type": "rdbg",
       "request": "launch",
