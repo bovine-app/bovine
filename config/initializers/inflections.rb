@@ -19,4 +19,5 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'HTTP'
+  inflect.acronym 'URL'
 end
