@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_01_152450) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_05_155836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -36,6 +36,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_01_152450) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "feed_id", null: false
+    t.jsonb "settings"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_subscriptions_on_feed_id"
+    t.index ["user_id", "feed_id"], name: "index_subscriptions_on_user_id_and_feed_id", unique: true
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest"
@@ -50,4 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_01_152450) do
   end
 
   add_foreign_key "sessions", "users"
+  add_foreign_key "subscriptions", "feeds"
+  add_foreign_key "subscriptions", "users"
 end

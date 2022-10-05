@@ -12,6 +12,8 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false }
 
   has_many :sessions, dependent: :delete_all
+  has_many :subscriptions, dependent: :destroy
+  has_many :feeds, through: :subscriptions
 
   scope :confirmed,   -> { inverse_of(:unconfirmed) }
   scope :unconfirmed, -> { where(confirmed_at: nil) }
