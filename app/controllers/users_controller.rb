@@ -2,6 +2,8 @@
 
 # User account self-management controller.
 class UsersController < ApplicationController
+  before_action :logged_in?, except: %i[new create]
+
   def new
     @user = User.new
   end

@@ -2,9 +2,7 @@
 
 # User authentication and session management controller.
 class SessionsController < ApplicationController
-  include SessionAuthentication
-
-  before_action :current_user, only: %i[index]
+  before_action :logged_in?, only: %i[index destroy]
 
   def index; end
 
