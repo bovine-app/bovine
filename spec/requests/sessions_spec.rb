@@ -26,4 +26,38 @@ RSpec.describe 'Sessions' do
       end
     end
   end
+
+  describe 'DELETE /' do
+    subject { response }
+
+    with_current_session
+
+    before { delete '/sessions' }
+
+    it { is_expected.to redirect_to(root_url) }
+
+    it 'destroys the session' do
+      expect { Session.find(current_session.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe 'DELETE /:id' do
+    subject { response }
+
+    with_current_user
+
+    let(:target_session) { create(:session, user: current_user) }
+
+    before { delete '/sessions', params: { id: target_session.id } }
+
+    it { is_expected.to redirect_to(sessions_url) }
+
+    it 'destroys the target session' do
+      expect { Session.find(target_session.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'does not destroy the current session' do
+      expect(Session.where(id: current_session.id).count).to be(1)
+    end
+  end
 end

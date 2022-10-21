@@ -23,7 +23,18 @@ class SessionsController < ApplicationController
     redirect_to action: :new
   end
 
-  def destroy; end
+  def destroy
+    if params.key?(:id)
+      current_user.sessions.find(params[:id]).destroy!
+
+      redirect_to action: :index
+    else
+      current_session.destroy!
+      reset_session
+
+      redirect_to root_url
+    end
+  end
 
   private
 
