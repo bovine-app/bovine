@@ -8,12 +8,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit; end
+
   def create
     User.create!(user_create_params)
     redirect_to root_url
   end
-
-  def edit; end
 
   def update; end
 
