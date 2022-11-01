@@ -222,7 +222,7 @@ GEM
     rubocop-rspec (2.14.2)
       rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
-    stimulus-rails (1.1.0)
+    stimulus-rails (1.1.1)
       railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.3.0)
@@ -241,7 +241,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.3)
 
 PLATFORMS
   arm64-darwin-22
